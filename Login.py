@@ -22,7 +22,6 @@ def load():
                 data = json.load(f)
                 USR=data.split(":",1)[0]
                 PWD=data.split(":",1)[1]
-                print(user)
         except:
             print("删除重新登录")
     else:
