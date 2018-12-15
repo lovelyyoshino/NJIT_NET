@@ -16,6 +16,7 @@ PWD    = ""
 ips="119.75.217.109"
 
 def load():
+    global USR,PWD
     if os.path.exists('data.json'):
         try:
             with open('data.json','r') as f:
@@ -30,6 +31,7 @@ def load():
         data=USR +":"+PWD
         with open('data.json', 'w') as fw:
             json.dump(data,fw)
+
 def get_ip():
     myname = socket.getfqdn(socket.gethostname())
     s = socket.gethostbyname(myname)
@@ -79,8 +81,9 @@ header_post = {
 
 if __name__ == "__main__":
     while 1:
-        load()
+        #print(PWD)
         if(ping_ips(ips)==False):
+            load()
             user_ip = get_ip()
             print(user_ip)
             url = "http://10.0.1.1:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.0.1.1&iTermType=1&wlanuserip=%s&wlanacip=null&wlanacname=njit_off&mac=00-00-00-00-00-00&ip=%s&enAdvert=0&queryACIP=0&loginMethod=1"%(user_ip,user_ip)
@@ -94,4 +97,3 @@ if __name__ == "__main__":
                 print("登录成功")
         else:
             time.sleep(10*60)
-
