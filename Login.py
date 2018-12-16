@@ -31,7 +31,6 @@ def load():
         data=USR +":"+PWD
         with open('data.json', 'w') as fw:
             json.dump(data,fw)
-
 def get_ip():
     myname = socket.getfqdn(socket.gethostname())
     s = socket.gethostbyname(myname)
@@ -51,24 +50,6 @@ def ping_ips(ips):
     return False
 
 
-postData ={
-    'DDDDD'         : ',0,%s' % USR,
-    'upass'         : '%s' % PWD,
-    'R1'            : '0',
-    'R2'            : '0',
-    'R3'            : '0',
-    'R6'            : '0',
-    'para'          : '00',
-    '0MKKey'        : '123456',
-    'buttonClicked' : '',
-    'redirect_url'  : '',
-    'err_flag'      : '',
-    'username'      : '',
-    'password'      : '',
-    'user'          : '',
-    'cmd'           : '',
-    'Login'         : ''
-}
 
 header_post = {
     'Origin': 'http://10.0.1.1',
@@ -81,11 +62,28 @@ header_post = {
 
 if __name__ == "__main__":
     while 1:
-        #print(PWD)
+        load()
         if(ping_ips(ips)==False):
-            load()
             user_ip = get_ip()
-            print(user_ip)
+            postData ={
+                    'DDDDD'         : ',0,%s' % USR,
+                    'upass'         : '%s' % PWD,
+                    'R1'            : '0',
+                    'R2'            : '0',
+                    'R3'            : '0',
+                    'R6'            : '0',
+                    'para'          : '00',
+                    '0MKKey'        : '123456',
+                    'buttonClicked' : '',
+                    'redirect_url'  : '',
+                    'err_flag'      : '',
+                    'username'      : '',
+                    'password'      : '',
+                    'user'          : '',
+                    'cmd'           : '',
+                    'Login'         : ''
+                }
+            #print(postData)
             url = "http://10.0.1.1:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.0.1.1&iTermType=1&wlanuserip=%s&wlanacip=null&wlanacname=njit_off&mac=00-00-00-00-00-00&ip=%s&enAdvert=0&queryACIP=0&loginMethod=1"%(user_ip,user_ip)
             #print(url)
             request = requests.post(url=url, data=postData, headers=header_post)
@@ -97,3 +95,4 @@ if __name__ == "__main__":
                 print("登录成功")
         else:
             time.sleep(10*60)
+
